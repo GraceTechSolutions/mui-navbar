@@ -26,24 +26,40 @@ export default function Navbar() {
             '&:hover': {
                 color: theme.palette.success.main
             }
+        },
+        link_: {
+            TextDecoration: 'none',
+            color: 'black',
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            paddingRight: theme.spacing(10),
+            '&:hover': {
+                color: theme.palette.success.main
+            }
         }
     }));
     const classes = useStyle()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
     console.log(isMobile);
+    const navLinks = [
+        {name: 'Home', id:1, endpoint: ''},
+        {name: 'About', id:2, endpoint: 'about'}, 
+        {name: 'Address', id:3, endpoint: 'address'}, 
+        {name: 'Contact', id:4, endpoint: 'contact'}
+    ];
+    let links = navLinks.map((val) =>{
+        return <Link className={classes.link} key={val.id} to={val.endpoint}>{val.name}</Link>;
+    })
     return (
         <ThemeProvider theme={theme}>
             <AppBar position='static'>
                 <Toolbar>
                     <Typography variant='h4' className={classes.logo}>Amazon</Typography>
                     {isMobile?
-                        <Drawer/>
+                        <Drawer links={navLinks} classname={classes.link_}/>
                         :
                         <div className={classes.navLinks}>
-                            <Link className={classes.link} to='/'>Home</Link>
-                            <Link className={classes.link} to='/about'>About</Link>
-                            <Link className={classes.link} to='/contact'>Contact</Link>
-                            <Link className={classes.link} to='faqs'>FAQs</Link>
+                            {links}
                         </div>
                     }
                 </Toolbar>

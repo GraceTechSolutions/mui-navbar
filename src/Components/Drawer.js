@@ -1,12 +1,14 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { IconButton } from '@mui/material';
+import { IconButton, ListItemIcon } from '@mui/material';
 import React from 'react'
 import { Drawer as Drawer_ } from '@mui/material';
 import { ListItem, ListItemText } from '@mui/material';
 import { useState } from 'react';
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom'
 
 
-export default function Drawer() {
+export default function Drawer({links, classname}) {
     const [open, setOpen] = useState(false)
     return (
         <div>
@@ -18,9 +20,16 @@ export default function Drawer() {
             open={open}
             onClose={()=> {setOpen(false)}}
             >
-                <ListItem button>
-                    <ListItemText primary={'Hello'} />
-                </ListItem>
+                {links.map(val=>{
+                    return (
+                        <Link to={val.endpoint} key={val.id} onClick={()=>{setOpen(false)}} className={classname}>
+                            <ListItem button>
+                                <ListItemText primary={val.name} />
+                            </ListItem>
+                        </Link>
+                    )
+                })}
+
             </Drawer_>
         </div>
     )
